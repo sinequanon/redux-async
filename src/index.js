@@ -1,9 +1,21 @@
+import React from 'react';
 import { Component } from 'react';
 import { render } from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import Root from './components/Root';
 
-class App extends Component {
-     render() {
-          return <h1>Hey it worked</h1>;
-     }
+const renderApp = () => {
+     render(<AppContainer>
+               <Root/>
+          </AppContainer>, document.querySelector('#root'));
 }
-render(<App/>, document.querySelector('#root'));
+
+renderApp();
+
+if (module.hot) {
+     module.hot.accept('./components/Root', () => {
+          const HotApp = require('./components/Root').default;
+          renderApp();
+          return true;
+     })
+}

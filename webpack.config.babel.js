@@ -15,7 +15,7 @@ export default {
                {
                     test : /\.jsx?$/,
                     exclude : /node_modules/,
-                    loader : 'babel?presets[]=es2015&presets[]=react&presets[]=stage-0&plugins[]=react-hot-loader/babel'
+                    loader : 'babel?presets[]=react&plugins[]=transform-runtime&plugins[]=transform-object-rest-spread&plugins[]=transform-regenerator&plugins[]=react-hot-loader/babel'
                }
           ]
      }

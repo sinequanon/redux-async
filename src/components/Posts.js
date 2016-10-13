@@ -1,26 +1,20 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
+import _ from 'lodash'
 
-const Posts = ({postsBySubreddit}) => {
-     let posts;
-          for (let subreddit in postsBySubreddit) {
-               posts = postsBySubreddit[subreddit].posts.map(post =>(
-                    <li key={post.id}>{post.title}</li>
-               )) 
-          }
+import Post from './Post'
 
-     return (
-          <ul>
-          {posts}
-          </ul>
-     );
-}
+const Posts = ({ subreddit }) =>
+  <ul>
+    { subreddit && subreddit.posts.map(post =>
+        <Post key={post.id} post={post}/>)}
+  </ul>
 
-
-const mapStateToProps = state => {
-     return {
-          postsBySubreddit: state.postsBySubreddit
-     }
+const mapStateToProps = (state) => {
+  const subreddit = _.get(state, 'form.Form.values.subreddit', null)
+  return {
+    subreddit: subreddit && state.postsBySubreddit[subreddit]
+  }
 }
 
 export default connect(mapStateToProps)(Posts)

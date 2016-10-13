@@ -1,39 +1,28 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { selectSubreddit, fetchPosts } from '../Actions';
-import Posts from './Posts';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import Posts from './Posts'
+import Form from './Form'
+import MUI from './MUI'
 
-const App = ({dispatch, isFetching, subreddit}, context) => { 
-     const header = <h1>{ isFetching ? 'Fetching posts...' : 'Reddit Simulator' }</h1>;
-     return <div>
-               { header }
-               <h3>Enter a valid subreddit name</h3>
-          <input type="text" name="subredditName" onChange={ e => {
-                         console.log('e : %o', e.target.value);
-                         console.log('subreddit : %s', subreddit);;
-                         dispatch(selectSubreddit(e.target.value));
-                    }
-               }
-               defaultValue="reactjs"/>
-               <button onClick={
-                    e => {
-                          
-                         dispatch(fetchPosts(subreddit));
-                    }
-               }>Get Posts</button>
-               <Posts/>
-          </div>
+const App = ({ isFetching }) => {
+  const header = <h1>{ isFetching ? 'Fetching posts...' : 'Reddit Simulator' }</h1>
+  return <MUI><div>
+      { header }
+      <Form/>
+  <Posts/>
+    </div>
+    </MUI>
 }
+
 App.contextTypes = {
-     store: PropTypes.object
+  store: PropTypes.object
 }
 
-const mapStateToProps = state => {
-     console.log('App mapStateTopProps', state);
-     return     {
-          isFetching: state.pageState.isFetching,
-          subreddit: state.selectSubreddit
-     }
-}
+const mapStateToProps = state => (
+  // console.log('App mapStateTopProps', state)
+  {
+    isFetching: state.pageState.isFetching
+  }
+)
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
